@@ -14,6 +14,7 @@ const userSchema = new Schema(
       required: true,
       unique: true,
       //need regex max
+      match: [/^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/],
     },
 
     thoughts: [
@@ -37,7 +38,12 @@ const userSchema = new Schema(
     id: false,
   }
 );
+//create a virtual called friendCount that retrieves the lengs of the user's friends array
+//field on query
 
+userSchema.virtual("friendCount").get(() => {
+  return this.friends.length;
+});
 const User = model("User", userSchema);
 
 module.exports = User;
