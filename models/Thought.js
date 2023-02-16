@@ -34,6 +34,7 @@ const thoughtSchema = new Schema({
     type: Date,
     default: Date.Now,
     //Use a getter method to format the timestamp on query
+    //https://www.mongodb.com/docs/manual/reference/method/Date/ I do not understand this
   },
 
   username: {
