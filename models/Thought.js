@@ -12,7 +12,7 @@ const reactionSchema = new Schema({
   },
 
   username: {
-    type: String.apply,
+    type: String,
     required: true,
   },
 
@@ -41,6 +41,9 @@ const thoughtSchema = new Schema({
     type: String,
     required: true,
   },
+  //   userSchema.virtual("reactionCount").get(() => {
+  //     return this.reactions.length;
+  // });
 
   reactions: [reactionSchema],
 });

@@ -44,16 +44,16 @@ module.exports = {
   },
 
   // Delete a thought
-  // deleteThought(req, res) {
-  //   Thought.findOneAndDelete({ _id: req.params.thoughtId })
-  //     .then((thoughtData) =>
-  //       !thoughtData
-  //         ? res.status(404).json({ message: "No thought with that ID" })
-  //         : Thought.deleteMany({ _id: { $in: thought.users } })
-  //     )
-  //     .then(() => res.json({ message: "Course and students deleted!" }))
-  //     .catch((err) => res.status(500).json(err));
-  // },
+  deleteThought(req, res) {
+    Thought.findOneAndDelete({ _id: req.params.thoughtId })
+      .then((thoughtData) =>
+        !thoughtData
+          ? res.status(404).json({ message: "No thought with that ID" })
+          : Thought.deleteMany({ _id: { $in: thought.users } })
+      )
+      .then(() => res.json({ message: "Thought deleted!" }))
+      .catch((err) => res.status(500).json(err));
+  },
   // Update a course
   updateThought(req, res) {
     Thought.findOneAndUpdate(
