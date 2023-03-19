@@ -12,7 +12,7 @@ module.exports = {
   getSingeThought(req, res) {
     console.log("Here come a thought!");
     Thought.findOne({ _id: req.params.thoughtId })
-      // .select("-__v")
+      .select("-__v")
       .then((thoughtData) =>
         !thoughtData
           ? res.status(404).json({ message: "No thouht with that ID" })
