@@ -1,7 +1,7 @@
 const { ObjectId } = require("mongoose").Types;
 const { User, Thought } = require("../models");
 
-const userController = {
+module.exports = {
   // Get all users
   getAllUsers(req, res) {
     User.find()
@@ -83,5 +83,3 @@ const userController = {
       .catch((err) => res.status(500).json(err));
   },
 };
-
-module.exports = userController;
