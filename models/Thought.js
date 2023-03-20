@@ -33,7 +33,8 @@ const thoughtSchema = new Schema({
 
   createdAt: {
     type: Date,
-    default: Date.Now,
+    default: Date.now,
+    get: (date) => moment(date).format("MMM DD, YYYY [at] hh:mm a"),
     //Use a getter method to format the timestamp on query
     //https://www.mongodb.com/docs/manual/reference/method/Date/ I do not understand this
   },
