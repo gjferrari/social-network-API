@@ -1,5 +1,5 @@
 const { Schema, model } = require("mongoose");
-const moment = require("moment");
+// const moment = require("moment");
 
 const reactionSchema = new Schema({
   reactionId: {
@@ -20,7 +20,7 @@ const reactionSchema = new Schema({
   createdAt: {
     type: Date,
     default: Date.now,
-    get: (date) => moment(date).format("MMM DD, YYYY [at] hh:mm a"),
+    // get: (date) => moment(date).format("MMM DD, YYYY [at] hh:mm a"),
   },
 });
 const thoughtSchema = new Schema({
@@ -34,7 +34,7 @@ const thoughtSchema = new Schema({
   createdAt: {
     type: Date,
     default: Date.now,
-    get: (date) => moment(date).format("MMM DD, YYYY [at] hh:mm a"),
+    // get: (date) => moment(date).format("MMM DD, YYYY [at] hh:mm a"),
     //Use a getter method to format the timestamp on query
     //https://www.mongodb.com/docs/manual/reference/method/Date/ I do not understand this
   },
