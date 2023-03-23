@@ -43,30 +43,31 @@ module.exports = {
       });
   },
 
-  deleteThought(req, res) {
-    Thought.findOneAndUpdate(
-      { _id: req.params.userId },
-      { $pull: { thoughts: req.params.thoughtId } },
-      { new: true }
-    )
-      .then((userData) =>
-        !userData
-          ? res.status(404).json({ message: "No user with this id!" })
-          : res.json(userData)
-      )
-      .catch((err) => res.status(500).json(err));
-  },
-  // Delete a thought
   // deleteThought(req, res) {
-  //   Thought.findOneAndDelete({ _id: req.params.thoughtId })
-  //     .then((thoughtData) =>
-  //       !thoughtData
-  //         ? res.status(404).json({ message: "No thought with that ID" })
-  //         : Thought.deleteMany({ _id: { $in: thoughtData.users } })
+  //   Thought.findOneAndUpdate(
+  //     { _id: req.params.userId },
+  //     { $pull: { thoughts: req.params.thoughtId } },
+  //     { new: true }
+  //   )
+  //     .then((userData) =>
+  //       !userData
+  //         ? res.status(404).json({ message: "No user with this id!" })
+  //         : res.json(userData)
   //     )
-  //     .then(() => res.json({ message: "Thought deleted!" }))
   //     .catch((err) => res.status(500).json(err));
   // },
+
+  // Delete a thought
+  deleteThought(req, res) {
+    Thought.findOneAndDelete({ _id: req.params.thoughtId })
+      .then((thoughtData) =>
+        !thoughtData
+          ? res.status(404).json({ message: "No thought with that ID" })
+          : Thought.deleteMany({ _id: { $in: thoughtData.users } })
+      )
+      .then(() => res.json({ message: "Thought deleted!" }))
+      .catch((err) => res.status(500).json(err));
+  },
 
   // Update a course
   updateThought(req, res) {
