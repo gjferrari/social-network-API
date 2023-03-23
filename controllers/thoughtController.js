@@ -103,4 +103,31 @@ module.exports = {
         res.status(500).json(err);
       });
   },
+
+  addReaction(req, res) {
+    User.findOneAndUpdate(
+      { _id: req.params.thoughtId },
+      { $addToSet: { friends: req.params.reactionId } },
+      { new: true }
+    )
+      .then((userData) =>
+        !userData
+          ? res.status(404).json({ message: "No user with this id!" })
+          : res.json(userData)
+      )
+      .catch((err) => res.status(500).json(err));
+  },
+  deleteReaction(req, res) {
+    User.findOneAndUpdate(
+      { _id: req.params.thoughtId },
+      { $pull: { friends: req.params.reactionId } },
+      { new: true }
+    )
+      .then((userData) =>
+        !userData
+          ? res.status(404).json({ message: "No user with this id!" })
+          : res.json(userData)
+      )
+      .catch((err) => res.status(500).json(err));
+  },
 };
