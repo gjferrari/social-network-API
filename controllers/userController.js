@@ -36,7 +36,7 @@ module.exports = {
       .then((userData) => res.json(userData))
       .catch((err) => {
         console.log(err);
-        return res.status(500).json(err);
+        res.status(500).json(err);
       });
   },
   // Delete a user
