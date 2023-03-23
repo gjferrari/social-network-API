@@ -10,8 +10,8 @@ module.exports = {
   },
   // Get a single thought
   getSingleThought(req, res) {
-    console.log("Here come a thought!");
-    Thought.findOne({ _id: req.params.thoughtId })
+    console.log("Here comes a thought!");
+    Thought.findById({ _id: req.params.thoughtId })
       .select("-__v")
       .then((thoughtData) =>
         !thoughtData
@@ -43,17 +43,31 @@ module.exports = {
       });
   },
 
-  // Delete a thought
   deleteThought(req, res) {
-    Thought.findOneAndDelete({ _id: req.params.thoughtId })
-      .then((thoughtData) =>
-        !thoughtData
-          ? res.status(404).json({ message: "No thought with that ID" })
-          : Thought.deleteMany({ _id: { $in: thought.users } })
+    Thought.findOneAndUpdate(
+      { _id: req.params.userId },
+      { $pull: { thoughts: req.params.thoughtId } },
+      { new: true }
+    )
+      .then((userData) =>
+        !userData
+          ? res.status(404).json({ message: "No user with this id!" })
+          : res.json(userData)
       )
-      .then(() => res.json({ message: "Thought deleted!" }))
       .catch((err) => res.status(500).json(err));
   },
+  // Delete a thought
+  // deleteThought(req, res) {
+  //   Thought.findOneAndDelete({ _id: req.params.thoughtId })
+  //     .then((thoughtData) =>
+  //       !thoughtData
+  //         ? res.status(404).json({ message: "No thought with that ID" })
+  //         : Thought.deleteMany({ _id: { $in: thoughtData.users } })
+  //     )
+  //     .then(() => res.json({ message: "Thought deleted!" }))
+  //     .catch((err) => res.status(500).json(err));
+  // },
+
   // Update a course
   updateThought(req, res) {
     Thought.findOneAndUpdate(
@@ -104,30 +118,30 @@ module.exports = {
       });
   },
 
-  addReaction(req, res) {
-    User.findOneAndUpdate(
-      { _id: req.params.thoughtId },
-      { $addToSet: { friends: req.params.reactionId } },
-      { new: true }
-    )
-      .then((userData) =>
-        !userData
-          ? res.status(404).json({ message: "No user with this id!" })
-          : res.json(userData)
-      )
-      .catch((err) => res.status(500).json(err));
-  },
-  deleteReaction(req, res) {
-    User.findOneAndUpdate(
-      { _id: req.params.thoughtId },
-      { $pull: { friends: req.params.reactionId } },
-      { new: true }
-    )
-      .then((userData) =>
-        !userData
-          ? res.status(404).json({ message: "No user with this id!" })
-          : res.json(userData)
-      )
-      .catch((err) => res.status(500).json(err));
-  },
+  // addReaction(req, res) {
+  //   User.findOneAndUpdate(
+  //     { _id: req.params.thoughtId },
+  //     { $addToSet: { friends: req.params.reactionId } },
+  //     { new: true }
+  //   )
+  //     .then((userData) =>
+  //       !userData
+  //         ? res.status(404).json({ message: "No user with this id!" })
+  //         : res.json(userData)
+  //     )
+  //     .catch((err) => res.status(500).json(err));
+  // },
+  // deleteReaction(req, res) {
+  //   User.findOneAndUpdate(
+  //     { _id: req.params.thoughtId },
+  //     { $pull: { friends: req.params.reactionId } },
+  //     { new: true }
+  //   )
+  //     .then((userData) =>
+  //       !userData
+  //         ? res.status(404).json({ message: "No user with this id!" })
+  //         : res.json(userData)
+  //     )
+  //     .catch((err) => res.status(500).json(err));
+  // },
 };
